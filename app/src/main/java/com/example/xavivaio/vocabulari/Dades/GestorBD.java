@@ -22,9 +22,6 @@ public class GestorBD extends SQLiteOpenHelper {
 
     //Declaracion del nombre de la tabla
     //public static final String PUNTUACIO_TABLE ="Puntuacio";
-
-
-
     //sentencia global de cracion de la base de datos
     //public static final String PUNTUACIO_TABLE_CREATE = "CREATE TABLE " + PUNTUACIO_TABLE + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, punts INTEGER);";
 
@@ -87,7 +84,8 @@ public class GestorBD extends SQLiteOpenHelper {
     }
 
     public Cursor getParaulesIdioma(String idioma){
-        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("DADES", "Vaig a buscar a la taula "+ idioma);
+        SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {IDIOMA_COLUMN_PARAULA, IDIOMA_COLUMN_NUMTRAD};
         Cursor c = db.query(
                 idioma,                                 // The table to query
@@ -117,7 +115,7 @@ public class GestorBD extends SQLiteOpenHelper {
     }
 
     public Cursor getIdiomes(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {IDIOMES_COLUMN_NAME, IDIOMES_COLUMN_NUMPAR, IDIOMA_COLUMN_NUMTRAD};
         Cursor c = db.query(
                 IDIOMES_TABLE_NAME,                        // The table to query

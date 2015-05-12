@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.Paraula;
 import com.example.xavivaio.vocabulari.R;
 
@@ -28,8 +29,8 @@ public class ParaulesAdapter extends BaseAdapter {
             if (cursor.moveToFirst()) {
                 do {
                     Paraula paraula = new Paraula();
-                    paraula.setParaula(cursor.getString(cursor.getColumnIndex("name")));
-                    paraula.setNumTrad(cursor.getInt(cursor.getColumnIndex("numTrad")));
+                    paraula.setParaula(cursor.getString(cursor.getColumnIndex(GestorBD.IDIOMA_COLUMN_PARAULA)));
+                    paraula.setNumTrad(cursor.getInt(cursor.getColumnIndex(GestorBD.IDIOMA_COLUMN_NUMTRAD)));
                     paraulaItems.add(paraula);
                 } while (cursor.moveToNext());
         }
