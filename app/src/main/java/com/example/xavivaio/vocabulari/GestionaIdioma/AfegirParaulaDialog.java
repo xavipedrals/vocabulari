@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
@@ -23,7 +24,7 @@ public class AfegirParaulaDialog extends DialogFragment {
     }
 
     private EditText mEditText;
-    private Button okButton;
+    private Button okButton, cancelButton;
     String idioma;
 
     public AfegirParaulaDialog() {
@@ -35,6 +36,7 @@ public class AfegirParaulaDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.afegir_paraula, container);
         mEditText = (EditText) view.findViewById(R.id.afegirParaulaEt);
         okButton = (Button) view.findViewById(R.id.okButtonAP);
+        cancelButton = (Button) view.findViewById(R.id.cancelButtonAP);
 
         idioma = getArguments().getString("idioma");
 
@@ -45,12 +47,22 @@ public class AfegirParaulaDialog extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, mEditText.getText().toString());
-                int numPar = new GestorBD(getActivity().getApplicationContext()).getNumParIdioma(idioma);
-                new GestorBD(getActivity().getApplicationContext()).updateIdiomes(idioma, numPar + 1);
+                if(!(mEditText.getText().toString()).equals("")) {
+                    new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, mEditText.getText().toString());
+                    int numPar = new GestorBD(getActivity().getApplicationContext()).getNumParIdioma(idioma);
+                    new GestorBD(getActivity().getApplicationContext()).updateIdiomes(idioma, numPar + 1);
+                    // TODO Preguntar Marcos a veure com fer-ho per refrescar aixo
 //                RefreshFragment activity = (RefreshFragment) getActivity();
 //                activity.onFinishDialog(true);
+                dismiss();
+                } else
+                Toast.makeText(getActivity().getApplicationContext(), "Introdueix una paraula", Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });

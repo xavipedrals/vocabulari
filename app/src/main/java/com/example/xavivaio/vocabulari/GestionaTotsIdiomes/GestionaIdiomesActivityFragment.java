@@ -34,6 +34,7 @@ public class GestionaIdiomesActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gestiona_idiomes, container, false);
+        getActivity().setTitle("Idiomes");
 
         Bundle b = getArguments();
         boolean refresh = false;

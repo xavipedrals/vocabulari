@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
@@ -23,7 +24,7 @@ public class AfegirIdiomaDialog extends DialogFragment {
     }
 
     private EditText mEditText;
-    private Button okButton;
+    private Button okButton, cancelButton;
 
     public AfegirIdiomaDialog() {
         // Empty constructor required for DialogFragment
@@ -34,6 +35,7 @@ public class AfegirIdiomaDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.afegir_idioma, container);
         mEditText = (EditText) view.findViewById(R.id.txt_your_name);
         okButton = (Button) view.findViewById(R.id.okButton);
+        cancelButton = (Button) view.findViewById(R.id.cancelButton);
 
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
@@ -42,11 +44,20 @@ public class AfegirIdiomaDialog extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GestorBD(getActivity().getApplicationContext()).insertIdioma(mEditText.getText().toString());
-                new GestorBD(getActivity().getApplicationContext()).createTableIdioma(mEditText.getText().toString());
-                RefreshFragment activity = (RefreshFragment) getActivity();
-                activity.onFinishDialog(true);
+                if(!(mEditText.getText().toString()).equals("")) {
+                    new GestorBD(getActivity().getApplicationContext()).insertIdioma(mEditText.getText().toString());
+                    new GestorBD(getActivity().getApplicationContext()).createTableIdioma(mEditText.getText().toString());
+                    RefreshFragment activity = (RefreshFragment) getActivity();
+                    activity.onFinishDialog(true);
+                    dismiss();
+                } else
+                Toast.makeText(getActivity().getApplicationContext(), "Introdueix un idioma", Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });

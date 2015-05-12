@@ -37,6 +37,7 @@ public class GestionaUnIdiomaFragment extends Fragment {
             idioma = b.getString("idioma", null);
             refresh = b.getBoolean("refresh", false);
         }
+        getActivity().setTitle(idioma);
 
         listView = (ListView) rootView.findViewById(android.R.id.list);
         getData();

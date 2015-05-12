@@ -11,12 +11,30 @@
         android:imeOptions="actionDone"
         android:password="false" />
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/okButtonAP"
-        android:gravity="center"
-        android:paddingLeft="24px"
-        android:paddingRight="24px" />
+        android:layout_height="match_parent"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:id="@+id/cancelButtonAP"
+            android:gravity="center"
+            android:paddingLeft="24px"
+            android:paddingRight="24px"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/okButtonAP"
+            android:gravity="center"
+            android:paddingLeft="24px"
+            android:paddingRight="24px"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>
