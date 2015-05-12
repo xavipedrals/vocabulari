@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerParaules"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+</FrameLayout>
+
+<!--fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
+    android:name="com.example.xavivaio.vocabulari.GestionaIdioma.GestionaUnIdiomaFragment"
+    tools:layout="@layout/fragment_gestiona_un_idioma" android:layout_width="match_parent"
+    android:layout_height="match_parent" /-->

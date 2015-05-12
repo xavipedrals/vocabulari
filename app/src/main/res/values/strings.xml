@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Vocabulari</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_jugar">JugarActivity</string>
+    <string name="title_activity_gestionar_idiomes">GestionarIdiomesActivity</string>
+    <string name="title_activity_ranking">RankingActivity</string>
+    <string name="title_activity_gestiona_idiomes">GestionaIdiomesActivity</string>
+    <string name="title_activity_gestiona_un_idioma">GestionaUnIdioma</string>
+</resources>
