@@ -101,4 +101,16 @@ public class GestionaUnIdiomaFragment extends Fragment {
     public GestionaUnIdiomaFragment() {
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        getData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
+
 }

@@ -32,7 +32,7 @@ public class IdiomesAdapter extends BaseAdapter {
                     Idioma idioma = new Idioma();
                     idioma.setName(cursor.getString(cursor.getColumnIndex(GestorBD.IDIOMES_COLUMN_NAME)));
                     idioma.setNumPar(cursor.getInt(cursor.getColumnIndex(GestorBD.IDIOMES_COLUMN_NUMPAR)));
-                            idioma.setNumTrad(cursor.getInt(cursor.getColumnIndex(GestorBD.IDIOMES_COLUMN_NUMTRAD)));
+                    idioma.setNumTrad(cursor.getInt(cursor.getColumnIndex(GestorBD.IDIOMES_COLUMN_NUMTRAD)));
                     idiomaItems.add(idioma);
                 } while (cursor.moveToNext());
         }

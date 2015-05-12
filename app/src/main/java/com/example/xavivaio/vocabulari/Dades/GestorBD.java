@@ -81,6 +81,36 @@ public class GestorBD extends SQLiteOpenHelper {
         contentValues.put(IDIOMA_COLUMN_NUMTRAD, 0);
         db.insert(idioma, null, contentValues);
         Log.d("DADES", "Inserto " + idioma + " " + paraula);
+        //updateIdiomes(idioma);
+    }
+
+    public void updateIdiomes (String idioma, int numPar){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //int numPar = getNumParIdioma(idioma);
+        //numPar++;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(IDIOMES_COLUMN_NUMPAR, numPar);
+        Log.d("DADES", "Vaig a fer un update");
+        db.update(IDIOMES_TABLE_NAME, contentValues, IDIOMES_COLUMN_NAME +"=?", new String[]{idioma});
+    }
+
+    public int getNumParIdioma(String idioma){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {IDIOMES_COLUMN_NUMPAR};
+        String[] valuesWhere = {idioma};
+        Cursor c = db.query(
+                IDIOMES_TABLE_NAME,                     // The table to query
+                columns,                                // The columns to return
+                IDIOMES_COLUMN_NAME + "=?",             // The columns for the WHERE clause
+                valuesWhere,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        if (c.moveToFirst()) {
+            int i = c.getInt(c.getColumnIndex(GestorBD.IDIOMES_COLUMN_NUMPAR));
+            return i;
+        } return -1;
     }
 
     public Cursor getParaulesIdioma(String idioma){
@@ -96,14 +126,10 @@ public class GestorBD extends SQLiteOpenHelper {
                 null,                                   // don't filter by row groups
                 null                                    // The sort order
         );
-        Cursor copia = c;
-        if (copia.moveToFirst()) {
-            do {
-                Log.d("DADES", String.valueOf(copia.getColumnIndex("name")));
-            } while (copia.moveToNext());
-        }
         return c;
     }
+
+
 
     public void insertIdioma(String name){
         SQLiteDatabase db = this.getWritableDatabase();

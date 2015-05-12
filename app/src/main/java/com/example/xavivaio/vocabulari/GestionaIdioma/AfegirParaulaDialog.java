@@ -46,6 +46,8 @@ public class AfegirParaulaDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, mEditText.getText().toString());
+                int numPar = new GestorBD(getActivity().getApplicationContext()).getNumParIdioma(idioma);
+                new GestorBD(getActivity().getApplicationContext()).updateIdiomes(idioma, numPar + 1);
 //                RefreshFragment activity = (RefreshFragment) getActivity();
 //                activity.onFinishDialog(true);
 
