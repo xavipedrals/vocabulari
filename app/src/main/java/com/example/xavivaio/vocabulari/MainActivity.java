@@ -13,7 +13,7 @@ import com.example.xavivaio.vocabulari.GestionaTotsIdiomes.GestionaIdiomesActivi
 
 public class MainActivity extends ActionBarActivity {
 
-    Button jugarBtn, gestionarBtn, rankingBtn;
+    Button jugarBtn, gestionarBtn, rankingBtn, traduccioBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,14 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, RankingActivity.class));
+            }
+        });
+
+        traduccioBtn = (Button) findViewById(R.id.traduccioBtn);
+        traduccioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreaTraduccioActivity.class));
             }
         });
     }

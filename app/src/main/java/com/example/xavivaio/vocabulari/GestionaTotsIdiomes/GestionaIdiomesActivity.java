@@ -7,9 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.xavivaio.vocabulari.R;
+import com.example.xavivaio.vocabulari.RefreshFragment;
 
 
-public class GestionaIdiomesActivity extends ActionBarActivity implements AfegirIdiomaDialog.RefreshFragment  {
+public class GestionaIdiomesActivity extends ActionBarActivity implements RefreshFragment {
 
     Fragment f;
     @Override

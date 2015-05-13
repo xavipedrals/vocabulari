@@ -3,7 +3,7 @@ package com.example.xavivaio.vocabulari;
 /**
  * Created by xavivaio on 13/05/2015.
  */
-public class Traducció {
+public class Traduccio {
     String paraula1;
     String paraula2;
     String nomTaula;

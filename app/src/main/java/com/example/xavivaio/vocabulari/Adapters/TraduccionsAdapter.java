@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
-import com.example.xavivaio.vocabulari.Traducció;
+import com.example.xavivaio.vocabulari.Traduccio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +21,19 @@ import java.util.List;
 public class TraduccionsAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<Traducció> traduccioItems;
+    private List<Traduccio> traduccioItems;
     private String paraula;
 
     public TraduccionsAdapter(Context context, String paraula) {
         this.context = context;
         this.paraula = paraula;
-        this.traduccioItems = new ArrayList<Traducció>();
+        this.traduccioItems = new ArrayList<Traduccio>();
     }
 
     public void addTraduccions(Cursor c, String nomTaula){
         if (c.moveToFirst()) {
             do {
-                Traducció t = new Traducció();
+                Traduccio t = new Traduccio();
                 t.setNomTaula(nomTaula);
                 t.setParaula1(c.getString(c.getColumnIndex(GestorBD.TRADUCCIO_COLUMN_PARAULA1)));
                 t.setParaula2(c.getString(c.getColumnIndex(GestorBD.TRADUCCIO_COLUMN_PARAULA2)));
@@ -70,7 +70,7 @@ public class TraduccionsAdapter extends BaseAdapter {
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
         // getting movie data for the row
-        Traducció t =  traduccioItems.get(position);
+        Traduccio t =  traduccioItems.get(position);
 
         // title
         if (!paraula.equals(t.getParaula1())){

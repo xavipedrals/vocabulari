@@ -36,6 +36,10 @@
             android:name=".GestionaParaula.GestionaParaulaActivity"
             android:label="@string/title_activity_gestiona_paraula" >
         </activity>
+        <activity
+            android:name=".CreaTraduccioActivity"
+            android:label="@string/title_activity_crea_traduccio" >
+        </activity>
     </application>
 
 </manifest>

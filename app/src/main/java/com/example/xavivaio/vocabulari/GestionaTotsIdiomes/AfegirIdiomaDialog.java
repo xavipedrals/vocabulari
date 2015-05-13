@@ -13,15 +13,12 @@ import android.widget.Toast;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
+import com.example.xavivaio.vocabulari.RefreshFragment;
 
 /**
  * Created by xavivaio on 11/05/2015.
  */
 public class AfegirIdiomaDialog extends DialogFragment {
-
-    public interface RefreshFragment {
-        void onFinishDialog(boolean b);
-    }
 
     private EditText mEditText;
     private Button okButton, cancelButton;

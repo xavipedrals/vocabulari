@@ -9,8 +9,9 @@ import android.view.MenuItem;
 
 import com.example.xavivaio.vocabulari.GestionaTotsIdiomes.AfegirIdiomaDialog;
 import com.example.xavivaio.vocabulari.R;
+import com.example.xavivaio.vocabulari.RefreshFragment;
 
-public class GestionaUnIdioma extends ActionBarActivity implements AfegirIdiomaDialog.RefreshFragment  {
+public class GestionaUnIdioma extends ActionBarActivity implements RefreshFragment {
 
     Fragment f;
     String idioma;
@@ -60,6 +61,7 @@ public class GestionaUnIdioma extends ActionBarActivity implements AfegirIdiomaD
         if (b) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("refresh", true);
+            bundle.putString("idioma", idioma);
             f = new GestionaUnIdiomaFragment();
             f.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.containerParaules,f,"gestio").commit();

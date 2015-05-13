@@ -13,15 +13,12 @@ import android.widget.Toast;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
+import com.example.xavivaio.vocabulari.RefreshFragment;
 
 /**
  * Created by xavivaio on 12/05/2015.
  */
 public class AfegirParaulaDialog extends DialogFragment {
-
-    public interface RefreshFragment {
-        void onFinishDialog(boolean b);
-    }
 
     private EditText mEditText;
     private Button okButton, cancelButton;
@@ -56,10 +53,9 @@ public class AfegirParaulaDialog extends DialogFragment {
                     new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, input);
                     int numPar = new GestorBD(getActivity().getApplicationContext()).getNumParIdioma(idioma);
                     new GestorBD(getActivity().getApplicationContext()).updateIdiomes(idioma, numPar + 1);
-                    // TODO Preguntar Marcos a veure com fer-ho per refrescar aixo
-//                RefreshFragment activity = (RefreshFragment) getActivity();
-//                activity.onFinishDialog(true);
-                dismiss();
+                    RefreshFragment activity = (RefreshFragment) getActivity();
+                    activity.onFinishDialog(true);
+                    dismiss();
                 } else
                 Toast.makeText(getActivity().getApplicationContext(), "Introdueix una paraula valida", Toast.LENGTH_SHORT).show();
             }
