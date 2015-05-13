@@ -140,10 +140,19 @@ public class CreaTraduccioActivity extends ActionBarActivity implements IListDia
                     }
                 }
                 if (b){
-                    Toast.makeText(c, "En tu caraaaaa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c, "Traduccio creada correctament", Toast.LENGTH_SHORT).show();
                     new GestorBD(getApplicationContext()).createTableTraduccio(idioma1, idioma2);
                     new GestorBD(getApplicationContext()).insertTraduccioControl(idioma1, idioma2);
                     new GestorBD(getApplicationContext()).insertTraduccio(idioma1, idioma2, paraula1, paraula2);
+                    int i1 = new GestorBD(getApplicationContext()).getNumTradParaula(idioma1, paraula1);
+                    int i2 = new GestorBD(getApplicationContext()).getNumTradParaula(idioma2, paraula2);
+                    new GestorBD(getApplicationContext()).actualitzaNumTrad(idioma1, paraula1,i1+1);
+                    new GestorBD(getApplicationContext()).actualitzaNumTrad(idioma2, paraula2,i2+1);
+                    new GestorBD(getApplicationContext()).insertTraduccio(idioma1, idioma2, paraula1, paraula2);
+                    etIdioma1.setText("");
+                    etIdioma2.setText("");
+                    etParaula1.setText("");
+                    etParaula2.setText("");
                 }else{
                     Toast.makeText(c, "Parametres incorrectes", Toast.LENGTH_SHORT).show();
                 }
@@ -154,11 +163,7 @@ public class CreaTraduccioActivity extends ActionBarActivity implements IListDia
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                etIdioma1.setText("");
-                etIdioma2.setText("");
-                etParaula1.setText("");
-                etParaula2.setText("");
-                //retorna a l'activity anterior
+                onBackPressed();
             }
         });
     }

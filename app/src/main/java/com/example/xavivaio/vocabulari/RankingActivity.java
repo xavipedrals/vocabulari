@@ -25,6 +25,7 @@ public class RankingActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Ranking");
         setContentView(R.layout.activity_ranking);
         listView = (ListView) findViewById(R.id.listViewRanking);
         getData();

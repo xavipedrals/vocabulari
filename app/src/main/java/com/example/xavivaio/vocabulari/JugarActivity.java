@@ -39,6 +39,7 @@ public class JugarActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jugar);
+        setTitle("Jugar");
         Bundle b = getIntent().getExtras();
         idioma1 = idioma2 = "";
         if (b != null) {

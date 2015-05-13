@@ -115,6 +115,32 @@ public class GestorBD extends SQLiteOpenHelper {
         db.update(IDIOMES_TABLE_NAME, contentValues, IDIOMES_COLUMN_NAME + "=?", new String[]{idioma});
     }
 
+    public int getNumTradParaula(String idioma, String paraula){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {IDIOMA_COLUMN_NUMTRAD};
+        String[] valuesWhere = {paraula};
+        Cursor c = db.query(
+                idioma,                     // The table to query
+                columns,                                // The columns to return
+                IDIOMES_COLUMN_NUMTRAD + "=?",             // The columns for the WHERE clause
+                valuesWhere,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        if (c.moveToFirst()) {
+            int i = c.getInt(c.getColumnIndex(GestorBD.IDIOMES_COLUMN_NUMPAR));
+            return i;
+        } return -1;
+    }
+
+    public void actualitzaNumTrad(String idioma, String paraula, int numTrad){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(IDIOMA_COLUMN_NUMTRAD, numTrad);
+        db.update(idioma, contentValues, IDIOMA_COLUMN_PARAULA + "=?", new String[]{paraula});
+    }
+
     public int getNumParIdioma(String idioma){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {IDIOMES_COLUMN_NUMPAR};
@@ -245,8 +271,6 @@ public class GestorBD extends SQLiteOpenHelper {
         }
         db.insert(nomTaula, null, contentValues);
     }
-
-    //TODO: Actualitzar el nombre de traduccions al insertar una traduccio
 
     public Cursor getTaulesTraduccio(String idioma){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -404,7 +428,6 @@ public class GestorBD extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS contacts");
         onCreate(db);
     }
