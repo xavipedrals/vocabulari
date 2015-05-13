@@ -30,6 +30,10 @@ public class AfegirIdiomaDialog extends DialogFragment {
         // Empty constructor required for DialogFragment
     }
 
+    public boolean isValidWord(String w) {
+        return w.matches("[A-Za-z]*");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.afegir_idioma, container);
@@ -44,14 +48,15 @@ public class AfegirIdiomaDialog extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!(mEditText.getText().toString()).equals("")) {
-                    new GestorBD(getActivity().getApplicationContext()).insertIdioma(mEditText.getText().toString());
-                    new GestorBD(getActivity().getApplicationContext()).createTableIdioma(mEditText.getText().toString());
+                String input = mEditText.getText().toString();
+                if(isValidWord(input) && !input.contains(" ")) {
+                    new GestorBD(getActivity().getApplicationContext()).insertIdioma(input);
+                    new GestorBD(getActivity().getApplicationContext()).createTableIdioma(input);
                     RefreshFragment activity = (RefreshFragment) getActivity();
                     activity.onFinishDialog(true);
                     dismiss();
                 } else
-                Toast.makeText(getActivity().getApplicationContext(), "Introdueix un idioma", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Introdueix un idioma valid", Toast.LENGTH_SHORT).show();
             }
         });
 

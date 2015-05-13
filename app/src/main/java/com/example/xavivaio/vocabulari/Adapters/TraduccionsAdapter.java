@@ -9,45 +9,47 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
-import com.example.xavivaio.vocabulari.Paraula;
 import com.example.xavivaio.vocabulari.R;
+import com.example.xavivaio.vocabulari.Traducció;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xavivaio on 12/05/2015.
+ * Created by xavivaio on 13/05/2015.
  */
-public class ParaulesAdapter extends BaseAdapter {
-        private Context context;
-        private LayoutInflater inflater;
-        private List<Paraula> paraulaItems;
+public class TraduccionsAdapter extends BaseAdapter {
+    private Context context;
+    private LayoutInflater inflater;
+    private List<Traducció> traduccioItems;
+    private String paraula;
 
-        public ParaulesAdapter(Context context, Cursor cursor) {
+    public TraduccionsAdapter(Context context, String paraula) {
         this.context = context;
-        this.paraulaItems = new ArrayList<Paraula>();
-            if (cursor.moveToFirst()) {
-                do {
-                    Paraula paraula = new Paraula();
-                    paraula.setParaula(cursor.getString(cursor.getColumnIndex(GestorBD.IDIOMA_COLUMN_PARAULA)));
-                    paraula.setNumTrad(cursor.getInt(cursor.getColumnIndex(GestorBD.IDIOMA_COLUMN_NUMTRAD)));
-                    paraulaItems.add(paraula);
-                } while (cursor.moveToNext());
-        }
+        this.paraula = paraula;
+        this.traduccioItems = new ArrayList<Traducció>();
     }
 
-    public String getNomParaula(int location){
-        return paraulaItems.get(location).getParaula();
+    public void addTraduccions(Cursor c, String nomTaula){
+        if (c.moveToFirst()) {
+            do {
+                Traducció t = new Traducció();
+                t.setNomTaula(nomTaula);
+                t.setParaula1(c.getString(c.getColumnIndex(GestorBD.TRADUCCIO_COLUMN_PARAULA1)));
+                t.setParaula2(c.getString(c.getColumnIndex(GestorBD.TRADUCCIO_COLUMN_PARAULA2)));
+                traduccioItems.add(t);
+            } while (c.moveToNext());
+        }
     }
 
     @Override
     public int getCount() {
-        return paraulaItems.size();
+        return  traduccioItems.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return paraulaItems.get(location);
+        return  traduccioItems.get(location);
     }
 
     @Override
@@ -68,13 +70,16 @@ public class ParaulesAdapter extends BaseAdapter {
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
         // getting movie data for the row
-        Paraula paraula = paraulaItems.get(position);
+        Traducció t =  traduccioItems.get(position);
 
         // title
-        title.setText(paraula.getParaula());
+        if (!paraula.equals(t.getParaula1())){
+            title.setText(t.getParaula1());
+        } else
+        title.setText(t.getParaula2());
 
         // rating
-        rating.setText("Nombre de traduccions: " + String.valueOf(paraula.getNumTrad()));
+        rating.setText("fdsfasdfasdfasdfa");
 
         // release year
         year.setText(String.valueOf(0));

@@ -31,6 +31,10 @@ public class AfegirParaulaDialog extends DialogFragment {
         // Empty constructor required for DialogFragment
     }
 
+    public boolean isValidWord(String w) {
+        return w.matches("[A-Za-z]*");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.afegir_paraula, container);
@@ -47,8 +51,9 @@ public class AfegirParaulaDialog extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!(mEditText.getText().toString()).equals("")) {
-                    new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, mEditText.getText().toString());
+                String input = mEditText.getText().toString();
+                if(isValidWord(input) && !input.contains(" ")) {
+                    new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, input);
                     int numPar = new GestorBD(getActivity().getApplicationContext()).getNumParIdioma(idioma);
                     new GestorBD(getActivity().getApplicationContext()).updateIdiomes(idioma, numPar + 1);
                     // TODO Preguntar Marcos a veure com fer-ho per refrescar aixo
@@ -56,7 +61,7 @@ public class AfegirParaulaDialog extends DialogFragment {
 //                activity.onFinishDialog(true);
                 dismiss();
                 } else
-                Toast.makeText(getActivity().getApplicationContext(), "Introdueix una paraula", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Introdueix una paraula valida", Toast.LENGTH_SHORT).show();
             }
         });
 

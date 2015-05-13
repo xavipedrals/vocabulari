@@ -9,6 +9,9 @@ import android.util.Log;
 
 import com.example.xavivaio.vocabulari.Paraula;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by xavivaio on 02/02/2015.
  */
@@ -42,11 +45,21 @@ public class GestorBD extends SQLiteOpenHelper {
 
     public static final String IDIOMA_COLUMN_PARAULA = "paraula";
     public static final String IDIOMA_COLUMN_ID = "id";
-    //public static final String IDIOMA_COLUMN_NUMPAR = "numpar";
     public static final String IDIOMA_COLUMN_NUMTRAD = "numtrad";
 
-    public static final String IDIOMA_TABLE_CREATE1 = "CREATE TABLE IF NOT EXISTS ";
-    public static final String IDIOMA_TABLE_CREATE2 = "(id INTEGER PRIMARY KEY AUTOINCREMENT, paraula CHAR(30) UNIQUE, numTrad INTEGER);";
+
+    public static final String TRADUCCIO_COLUMN_PARAULA1 = "paraula1";
+    public static final String TRADUCCIO_COLUMN_PARAULA2 = "paraula2";
+
+
+    public static final String TRADUCCIONS_TABLE_NAME = "traduccions";
+    public static final String TRADUCCIONS_COLUMN_IDIOMA1 = "idioma1";
+    public static final String TRADUCCIONS_COLUMN_IDIOMA2 = "idioma2";
+
+    public static final String TRADUCCIONS_TABLE_CREATE = "CREATE TABLE "+ TRADUCCIONS_TABLE_NAME +"(" +
+            TRADUCCIONS_COLUMN_IDIOMA1 + " CHAR(30), "+
+            TRADUCCIONS_COLUMN_IDIOMA2 + " CHAR(30), "+
+            "PRIMARY KEY("+TRADUCCIONS_COLUMN_IDIOMA1+","+TRADUCCIONS_COLUMN_IDIOMA2+"));";
 
 
     public GestorBD(Context context){
@@ -61,10 +74,25 @@ public class GestorBD extends SQLiteOpenHelper {
         return IDIOMA_TABLE_CREATE;
     }
 
+    private String getStringCreaTraduccio(String idioma1, String idioma2){
+        String nomTaula;
+        if (idioma1.compareTo(idioma2) < 0){
+            nomTaula = idioma1 + idioma2;
+        } else {
+            nomTaula = idioma2 + idioma1;
+        }
+        final String TRADUCCIO_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "+ nomTaula +"(" +
+                TRADUCCIO_COLUMN_PARAULA1 + " CHAR(30), "+
+                TRADUCCIO_COLUMN_PARAULA2 + " CHAR(30) UNIQUE," +
+                "PRIMARY KEY("+TRADUCCIO_COLUMN_PARAULA1+"));";
+        return TRADUCCIO_CREATE_TABLE;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL(PUNTUACIO_TABLE_CREATE);
         db.execSQL(IDIOMES_TABLE_CREATE);
+        db.execSQL(TRADUCCIONS_TABLE_CREATE);
     }
 
     public void createTableIdioma(String idioma){
@@ -86,12 +114,10 @@ public class GestorBD extends SQLiteOpenHelper {
 
     public void updateIdiomes (String idioma, int numPar){
         SQLiteDatabase db = this.getWritableDatabase();
-        //int numPar = getNumParIdioma(idioma);
-        //numPar++;
         ContentValues contentValues = new ContentValues();
         contentValues.put(IDIOMES_COLUMN_NUMPAR, numPar);
         Log.d("DADES", "Vaig a fer un update");
-        db.update(IDIOMES_TABLE_NAME, contentValues, IDIOMES_COLUMN_NAME +"=?", new String[]{idioma});
+        db.update(IDIOMES_TABLE_NAME, contentValues, IDIOMES_COLUMN_NAME + "=?", new String[]{idioma});
     }
 
     public int getNumParIdioma(String idioma){
@@ -129,8 +155,6 @@ public class GestorBD extends SQLiteOpenHelper {
         return c;
     }
 
-
-
     public void insertIdioma(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -154,6 +178,76 @@ public class GestorBD extends SQLiteOpenHelper {
         );
         return c;
     }
+
+    private void createTableTraduccio (String idioma1, String idioma2){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String CREA_TAULA_TRAD = getStringCreaTraduccio(idioma1, idioma2);
+        db.execSQL(CREA_TAULA_TRAD);
+    }
+
+    private void insertTraduccioControl(String idioma1, String idioma2){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        if (idioma1.compareTo(idioma2) < 0){
+            contentValues.put(TRADUCCIONS_COLUMN_IDIOMA1, idioma1);
+            contentValues.put(TRADUCCIONS_COLUMN_IDIOMA2, idioma2);
+        } else {
+            contentValues.put(TRADUCCIONS_COLUMN_IDIOMA1, idioma2);
+            contentValues.put(TRADUCCIONS_COLUMN_IDIOMA2, idioma1);
+        }
+    }
+
+    public void insertTraduccio (String idioma1, String idioma2, String paraula1, String paraula2){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        String nomTaula;
+        if (idioma1.compareTo(idioma2) < 0){
+            nomTaula = idioma1 + idioma2;
+            contentValues.put(TRADUCCIO_COLUMN_PARAULA1, paraula1);
+            contentValues.put(TRADUCCIO_COLUMN_PARAULA2, paraula2);
+        } else {
+            nomTaula = idioma2 + idioma1;
+            contentValues.put(TRADUCCIO_COLUMN_PARAULA1, paraula2);
+            contentValues.put(TRADUCCIO_COLUMN_PARAULA2, paraula1);
+        }
+        db.insert(nomTaula, null, contentValues);
+    }
+
+    public Cursor getTaulesTraduccio(String idioma){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {TRADUCCIONS_COLUMN_IDIOMA1, TRADUCCIONS_COLUMN_IDIOMA2};
+        String columnsWhere = TRADUCCIONS_COLUMN_IDIOMA1+"=?"+" OR "+TRADUCCIONS_COLUMN_IDIOMA2+"=?";
+        String[] valuesWhere = {idioma, idioma};
+        Cursor c = db.query(
+                TRADUCCIONS_TABLE_NAME,                 // The table to query
+                columns,                                // The columns to return
+                columnsWhere,                           // The columns for the WHERE clause
+                valuesWhere,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        return c;
+    }
+
+    public Cursor getParaulesTraduccio(String nomTaulaTrad, String paraula){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {TRADUCCIO_COLUMN_PARAULA1, TRADUCCIO_COLUMN_PARAULA2};
+        String columnsWhere = TRADUCCIO_COLUMN_PARAULA1+"=?"+" OR "+TRADUCCIO_COLUMN_PARAULA2+"=?";
+        String[] valuesWhere = {paraula, paraula};
+        Cursor c = db.query(
+                nomTaulaTrad,                           // The table to query
+                columns,                                // The columns to return
+                columnsWhere,                           // The columns for the WHERE clause
+                valuesWhere,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        return c;
+    }
+
+
 
 //    public void renameIdioma(String newName, String oldName){
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -191,8 +285,6 @@ public class GestorBD extends SQLiteOpenHelper {
 //        return -1;
 //    }
 
-
-
 //    public void insertPuntuacio (String name, int punts){
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues contentValues = new ContentValues();
@@ -203,11 +295,7 @@ public class GestorBD extends SQLiteOpenHelper {
 //        db.insert(PUNTUACIO_TABLE, null, contentValues);
 //    }
 //
-//    private void createTaulaTraduccio (String name){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String CREA_TAULA = "CREATE TABLE " + name + "(paraula1 CHAR(30), paraula2 CHAR(30), PRIMARY KEY (paraula1, paraula2));";
-//        db.execSQL(CREA_TAULA);
-//    }
+
 //
 //    public void insertTraduccio (String idioma1, String idioma2, String paraula1, String paraula2){
 //        SQLiteDatabase db = this.getWritableDatabase();

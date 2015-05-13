@@ -1,42 +1,39 @@
-package com.example.xavivaio.vocabulari.GestionaIdioma;
+package com.example.xavivaio.vocabulari.GestionaParaula;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.xavivaio.vocabulari.GestionaTotsIdiomes.AfegirIdiomaDialog;
 import com.example.xavivaio.vocabulari.R;
 
-public class GestionaUnIdioma extends ActionBarActivity implements AfegirIdiomaDialog.RefreshFragment  {
+public class GestionaParaulaActivity extends ActionBarActivity {
 
     Fragment f;
-    String idioma;
+    String idioma, paraula;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gestiona_un_idioma);
+        setContentView(R.layout.activity_gestiona_paraula);
         Bundle b = getIntent().getExtras();
         idioma = null;
+        paraula = null;
         if (b != null) {
             idioma = b.getString("idioma", null);
+            paraula = b.getString("paraula", null);
         }
-        f = new GestionaUnIdiomaFragment();
+        f = new GestionaParaulaActivityFragment();
         f.setArguments(b);
-        getSupportFragmentManager().beginTransaction().add(R.id.containerParaules,f,"gestio").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.containerParaula,f,"gestio").commit();
     }
 
-    public String getIdioma(){
-        return idioma;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gestiona_un_idioma, menu);
+        getMenuInflater().inflate(R.menu.menu_gestiona_paraula, menu);
         return true;
     }
 
@@ -53,16 +50,5 @@ public class GestionaUnIdioma extends ActionBarActivity implements AfegirIdiomaD
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onFinishDialog(boolean b) {
-        if (b) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("refresh", true);
-            f = new GestionaUnIdiomaFragment();
-            f.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.containerParaules,f,"gestio").commit();
-        }
     }
 }

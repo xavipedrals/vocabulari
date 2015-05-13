@@ -1,5 +1,6 @@
 package com.example.xavivaio.vocabulari.GestionaIdioma;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.Adapters.ParaulesAdapter;
+import com.example.xavivaio.vocabulari.GestionaParaula.GestionaParaulaActivity;
 import com.example.xavivaio.vocabulari.R;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -41,16 +43,6 @@ public class GestionaUnIdiomaFragment extends Fragment {
 
         listView = (ListView) rootView.findViewById(android.R.id.list);
         getData();
-
-        listView.setAdapter(paraulesAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                int id2 = (int) customListAdapter.getItemId(position);
-//                getActivity().startActivity(new Intent(getActivity().getApplicationContext(), GestionaUnIdioma.class));
-            }
-        });
-
 
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.attachToListView(listView);
@@ -89,11 +81,12 @@ public class GestionaUnIdiomaFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Bundle b = new Bundle();
-//                b.putString("idioma", idiomesAdapter.getNomIdioma(position));
-//                Intent intent = new Intent(getActivity().getApplicationContext(), GestionaUnIdioma.class);
-//                intent.putExtras(b);
-//                getActivity().startActivity(intent);
+                Bundle b = new Bundle();
+                b.putString("idioma", idioma);
+                b.putString("paraula", paraulesAdapter.getNomParaula(position));
+                Intent intent = new Intent(getActivity().getApplicationContext(), GestionaParaulaActivity.class);
+                intent.putExtras(b);
+                getActivity().startActivity(intent);
             }
         });
         paraulesAdapter.notifyDataSetChanged();

@@ -32,6 +32,10 @@
             android:name=".GestionaIdioma.GestionaUnIdioma"
             android:label="@string/title_activity_gestiona_un_idioma" >
         </activity>
+        <activity
+            android:name=".GestionaParaula.GestionaParaulaActivity"
+            android:label="@string/title_activity_gestiona_paraula" >
+        </activity>
     </application>
 
 </manifest>
