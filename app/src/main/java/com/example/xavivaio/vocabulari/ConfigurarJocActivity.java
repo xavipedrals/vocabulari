@@ -6,19 +6,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class JugarActivity extends ActionBarActivity {
+public class ConfigurarJocActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jugar);
-
+        setContentView(R.layout.activity_configurar_joc);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_jugar, menu);
+        getMenuInflater().inflate(R.menu.menu_configurar_joc, menu);
         return true;
     }
 
@@ -36,6 +35,4 @@ public class JugarActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

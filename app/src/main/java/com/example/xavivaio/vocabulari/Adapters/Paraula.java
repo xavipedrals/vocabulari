@@ -1,4 +1,4 @@
-package com.example.xavivaio.vocabulari;
+package com.example.xavivaio.vocabulari.Adapters;
 
 /**
  * Created by xavivaio on 12/05/2015.

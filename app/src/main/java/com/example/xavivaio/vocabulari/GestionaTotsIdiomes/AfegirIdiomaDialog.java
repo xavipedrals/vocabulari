@@ -46,7 +46,7 @@ public class AfegirIdiomaDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String input = mEditText.getText().toString();
-                if(isValidWord(input) && !input.contains(" ")) {
+                if(isValidWord(input) && !input.contains(" ") && !input.equals("")) {
                     new GestorBD(getActivity().getApplicationContext()).insertIdioma(input);
                     new GestorBD(getActivity().getApplicationContext()).createTableIdioma(input);
                     RefreshFragment activity = (RefreshFragment) getActivity();
@@ -72,7 +72,6 @@ public class AfegirIdiomaDialog extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 }
 

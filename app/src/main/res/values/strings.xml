@@ -10,4 +10,5 @@
     <string name="title_activity_gestiona_un_idioma">GestionaUnIdioma</string>
     <string name="title_activity_gestiona_paraula">GestionaParaulaActivity</string>
     <string name="title_activity_crea_traduccio">CreaTraduccioActivity</string>
+    <string name="title_activity_configurar_joc">ConfigurarJocActivity</string>
 </resources>

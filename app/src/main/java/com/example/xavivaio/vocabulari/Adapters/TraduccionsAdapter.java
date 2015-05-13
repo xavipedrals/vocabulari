@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
-import com.example.xavivaio.vocabulari.Traduccio;
 
 import java.util.ArrayList;
 import java.util.List;

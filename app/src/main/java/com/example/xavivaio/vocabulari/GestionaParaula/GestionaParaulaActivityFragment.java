@@ -1,8 +1,10 @@
 package com.example.xavivaio.vocabulari.GestionaParaula;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.xavivaio.vocabulari.Adapters.IdiomesAdapter;
 import com.example.xavivaio.vocabulari.Adapters.TraduccionsAdapter;
+import com.example.xavivaio.vocabulari.CreaTraduccioActivity;
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import com.example.xavivaio.vocabulari.R;
 import com.melnykov.fab.FloatingActionButton;
@@ -33,7 +36,6 @@ public class GestionaParaulaActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gestiona_paraula, container, false);
 
-
         Bundle b = getArguments();
         //boolean refresh = false;
         if (b != null) {
@@ -44,6 +46,7 @@ public class GestionaParaulaActivityFragment extends Fragment {
         getActivity().setTitle(idioma + ": " + paraula);
 
         listView = (ListView) rootView.findViewById(android.R.id.list);
+        Log.d("HOLA", "Hola colega");
         getData();
 
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -51,11 +54,12 @@ public class GestionaParaulaActivityFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                AfegirIdiomaDialog dialog = new AfegirIdiomaDialog();
-//                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                dialog.show(fragmentManager, "tag");
-//                getData();
-                //TODO: Anar a activity traduccio
+                Bundle b = new Bundle();
+                b.putString("idioma", idioma);
+                b.putString("paraula", paraula);
+                Intent intent = new Intent(getActivity(), CreaTraduccioActivity.class);
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
 
@@ -74,12 +78,12 @@ public class GestionaParaulaActivityFragment extends Fragment {
     public void getData() {
         c = new GestorBD(getActivity().getApplicationContext()).getTaulesTraduccio(idioma);
         traduccionsAdapter = new TraduccionsAdapter(getActivity().getApplicationContext(), paraula);
-
         if (c.moveToFirst()) {
             do {
                 String idioma1 = c.getString(c.getColumnIndex(GestorBD.TRADUCCIONS_COLUMN_IDIOMA1));
                 String idioma2 = c.getString(c.getColumnIndex(GestorBD.TRADUCCIONS_COLUMN_IDIOMA2));
                 String nomTaula = idioma1+idioma2;
+                Log.d("CURSOR", "Taula traduccio control -> "+ nomTaula);
                 Cursor aux = new GestorBD(getActivity().getApplicationContext()).getParaulesTraduccio(nomTaula, paraula);
                 traduccionsAdapter.addTraduccions(aux, nomTaula);
             } while (c.moveToNext());

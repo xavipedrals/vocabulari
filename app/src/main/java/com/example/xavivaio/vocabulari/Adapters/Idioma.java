@@ -1,4 +1,4 @@
-package com.example.xavivaio.vocabulari;
+package com.example.xavivaio.vocabulari.Adapters;
 
 import java.util.ArrayList;
 

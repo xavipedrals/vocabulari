@@ -7,11 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.xavivaio.vocabulari.Paraula;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by xavivaio on 02/02/2015.
  */
@@ -179,13 +174,13 @@ public class GestorBD extends SQLiteOpenHelper {
         return c;
     }
 
-    private void createTableTraduccio (String idioma1, String idioma2){
+    public void createTableTraduccio (String idioma1, String idioma2){
         SQLiteDatabase db = this.getWritableDatabase();
         String CREA_TAULA_TRAD = getStringCreaTraduccio(idioma1, idioma2);
         db.execSQL(CREA_TAULA_TRAD);
     }
 
-    private void insertTraduccioControl(String idioma1, String idioma2){
+    public void insertTraduccioControl(String idioma1, String idioma2){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         if (idioma1.compareTo(idioma2) < 0){
@@ -195,6 +190,7 @@ public class GestorBD extends SQLiteOpenHelper {
             contentValues.put(TRADUCCIONS_COLUMN_IDIOMA1, idioma2);
             contentValues.put(TRADUCCIONS_COLUMN_IDIOMA2, idioma1);
         }
+        db.insert(TRADUCCIONS_TABLE_NAME, null, contentValues);
     }
 
     public void insertTraduccio (String idioma1, String idioma2, String paraula1, String paraula2){
@@ -212,6 +208,8 @@ public class GestorBD extends SQLiteOpenHelper {
         }
         db.insert(nomTaula, null, contentValues);
     }
+
+    //TODO: Actualitzar el nombre de traduccions al insertar una traduccio
 
     public Cursor getTaulesTraduccio(String idioma){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -244,8 +242,46 @@ public class GestorBD extends SQLiteOpenHelper {
                 null,                                   // don't filter by row groups
                 null                                    // The sort order
         );
+        Log.d("DADES", "Ei crac, com va?");
         return c;
     }
+
+    public boolean checkIdioma(String idioma){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {IDIOMES_COLUMN_NAME};
+        String columnsWhere = IDIOMES_COLUMN_NAME+"=?";
+        String[] valuesWhere = {idioma};
+        Cursor c = db.query(
+                IDIOMES_TABLE_NAME,                     // The table to query
+                columns,                                // The columns to return
+                columnsWhere,                           // The columns for the WHERE clause
+                valuesWhere,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        if (c.moveToFirst()) return true;
+        return false;
+    }
+
+    public boolean checkParaula(String idioma, String paraula){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {IDIOMA_COLUMN_PARAULA};
+        String columnsWhere = IDIOMA_COLUMN_PARAULA+"=?";
+        String[] valuesWhere = {paraula};
+        Cursor c = db.query(
+                idioma,                                 // The table to query
+                columns,                                // The columns to return
+                columnsWhere,                           // The columns for the WHERE clause
+                valuesWhere,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        if (c.moveToFirst()) return true;
+        return false;
+    }
+
 
 
 

@@ -1,6 +1,5 @@
 package com.example.xavivaio.vocabulari.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.xavivaio.vocabulari.Dades.GestorBD;
-import com.example.xavivaio.vocabulari.Idioma;
 import com.example.xavivaio.vocabulari.R;
 
 import java.util.ArrayList;

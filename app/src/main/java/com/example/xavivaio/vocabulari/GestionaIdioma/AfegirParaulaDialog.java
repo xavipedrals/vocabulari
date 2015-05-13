@@ -49,7 +49,7 @@ public class AfegirParaulaDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String input = mEditText.getText().toString();
-                if(isValidWord(input) && !input.contains(" ")) {
+                if(isValidWord(input) && !input.contains(" ") && !input.equals("")) {
                     new GestorBD(getActivity().getApplicationContext()).insertParaula(idioma, input);
                     int numPar = new GestorBD(getActivity().getApplicationContext()).getNumParIdioma(idioma);
                     new GestorBD(getActivity().getApplicationContext()).updateIdiomes(idioma, numPar + 1);
