@@ -19,11 +19,11 @@ public class GestorBD extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Dades";
 
     //Declaracion del nombre de la tabla
-    //public static final String PUNTUACIO_TABLE ="Puntuacio";
+    public static final String PUNTUACIO_TABLE ="Puntuacio";
     //sentencia global de cracion de la base de datos
-    //public static final String PUNTUACIO_TABLE_CREATE = "CREATE TABLE " + PUNTUACIO_TABLE + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, punts INTEGER);";
+    public static final String PUNTUACIO_TABLE_CREATE = "CREATE TABLE " + PUNTUACIO_TABLE + "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, punts INTEGER);";
 
-    //public static final String PUNTUACIO_TABLE_RESET = "DELETE FROM " + PUNTUACIO_TABLE;
+    public static final String PUNTUACIO_TABLE_RESET = "DELETE FROM " + PUNTUACIO_TABLE;
 
     public static final String IDIOMES_TABLE_NAME = "Idiomes";
     public static final String IDIOMES_COLUMN_NAME = "name";
@@ -85,7 +85,7 @@ public class GestorBD extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL(PUNTUACIO_TABLE_CREATE);
+        db.execSQL(PUNTUACIO_TABLE_CREATE);
         db.execSQL(IDIOMES_TABLE_CREATE);
         db.execSQL(TRADUCCIONS_TABLE_CREATE);
     }
@@ -193,6 +193,43 @@ public class GestorBD extends SQLiteOpenHelper {
         db.insert(TRADUCCIONS_TABLE_NAME, null, contentValues);
     }
 
+    public Cursor getTraduccioControl(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {TRADUCCIONS_COLUMN_IDIOMA1, TRADUCCIONS_COLUMN_IDIOMA2};
+        Cursor c = db.query(
+                TRADUCCIONS_TABLE_NAME,                           // The table to query
+                columns,                                // The columns to return
+                null,                           // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        return c;
+    }
+
+
+    public Cursor getAllTaulaTraduccio(String idioma1, String idioma2){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String nomTaula;
+        if (idioma1.compareTo(idioma2) < 0){
+            nomTaula = idioma1+idioma2;
+        } else {
+            nomTaula = idioma2+idioma1;
+        }
+        String[] columns = {TRADUCCIO_COLUMN_PARAULA1, TRADUCCIO_COLUMN_PARAULA2};
+        Cursor c = db.query(
+                nomTaula,                 // The table to query
+                columns,                                // The columns to return
+                null,                           // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        return c;
+    }
+
     public void insertTraduccio (String idioma1, String idioma2, String paraula1, String paraula2){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -242,7 +279,6 @@ public class GestorBD extends SQLiteOpenHelper {
                 null,                                   // don't filter by row groups
                 null                                    // The sort order
         );
-        Log.d("DADES", "Ei crac, com va?");
         return c;
     }
 
@@ -321,26 +357,15 @@ public class GestorBD extends SQLiteOpenHelper {
 //        return -1;
 //    }
 
-//    public void insertPuntuacio (String name, int punts){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//
-//        contentValues.put("name", name);
-//        contentValues.put("punts", punts);
-//
-//        db.insert(PUNTUACIO_TABLE, null, contentValues);
-//    }
-//
+    public void insertPuntuacio (String name, int punts){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
 
-//
-//    public void insertTraduccio (String idioma1, String idioma2, String paraula1, String paraula2){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        int id_taula1 = getIdentificadorIdioma(idioma1);
-//        int id_taula2 = getIdentificadorIdioma(idioma2);
-//
-//    }
+        contentValues.put("name", name);
+        contentValues.put("punts", punts);
 
-
+        db.insert(PUNTUACIO_TABLE, null, contentValues);
+    }
 
 //    public void renameParaula (String idioma, String paraulaAct, String paraulaNova){
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -357,25 +382,25 @@ public class GestorBD extends SQLiteOpenHelper {
 //        db.execSQL("SELECT COUNT(*) FROM " + nomTaula + ";");
 //    }
 
-//    public Cursor getPuntuacions() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String[] columns = {"name", "punts"};
-//        Cursor c = db.query(
-//                PUNTUACIO_TABLE,                        // The table to query
-//                columns,                                // The columns to return
-//                null,                                   // The columns for the WHERE clause
-//                null,                                   // The values for the WHERE clause
-//                null,                                   // don't group the rows
-//                null,                                   // don't filter by row groups
-//                null                                    // The sort order
-//        );
-//        return c;
-//    }
+    public Cursor getPuntuacions() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {"name", "punts"};
+        Cursor c = db.query(
+                PUNTUACIO_TABLE,                        // The table to query
+                columns,                                // The columns to return
+                null,                                   // The columns for the WHERE clause
+                null,                                   // The values for the WHERE clause
+                null,                                   // don't group the rows
+                null,                                   // don't filter by row groups
+                null                                    // The sort order
+        );
+        return c;
+    }
 //
-//    public void resetTablePuntuacio(){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.execSQL(PUNTUACIO_TABLE_RESET);
-//    }
+    public void resetTablePuntuacio(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(PUNTUACIO_TABLE_RESET);
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

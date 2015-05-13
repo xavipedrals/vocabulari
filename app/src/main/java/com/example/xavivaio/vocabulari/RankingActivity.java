@@ -1,17 +1,33 @@
 package com.example.xavivaio.vocabulari;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.example.xavivaio.vocabulari.Adapters.IdiomesAdapter;
+import com.example.xavivaio.vocabulari.Adapters.JugadorAdapter;
+import com.example.xavivaio.vocabulari.Dades.GestorBD;
+import com.example.xavivaio.vocabulari.GestionaIdioma.GestionaUnIdioma;
 
 
 public class RankingActivity extends ActionBarActivity {
+
+    ListView listView;
+    Cursor c;
+    JugadorAdapter jugadorsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+        listView = (ListView) findViewById(R.id.listViewRanking);
+        getData();
     }
 
     @Override
@@ -34,5 +50,17 @@ public class RankingActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void getData() {
+        c = new GestorBD(getApplicationContext()).getPuntuacions();
+        jugadorsAdapter = new JugadorAdapter(getApplicationContext(), c);
+        listView.setAdapter(jugadorsAdapter);
+        jugadorsAdapter.notifyDataSetChanged();
     }
 }

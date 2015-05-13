@@ -75,13 +75,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CANCELAR"
-                android:id="@+id/button" />
+                android:id="@+id/buttonCancelar" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="JUGAR"
-                android:id="@+id/button2" />
+                android:id="@+id/buttonJugar" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

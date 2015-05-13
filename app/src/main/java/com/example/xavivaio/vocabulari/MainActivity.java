@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
         jugarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, JugarActivity.class));
+                startActivity(new Intent(MainActivity.this, ConfigurarJocActivity.class));
             }
         });
 

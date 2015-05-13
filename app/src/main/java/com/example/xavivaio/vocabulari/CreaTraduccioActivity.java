@@ -18,6 +18,7 @@ import com.example.xavivaio.vocabulari.Dades.GestorBD;
 import java.util.ArrayList;
 
 public class CreaTraduccioActivity extends ActionBarActivity implements IListDialogListener {
+
     Button buttonIdioma1, buttonIdioma2, buttonParaula1, buttonParaula2;
     Button buttonOK, buttonCancel;
     EditText etIdioma1, etIdioma2, etParaula1, etParaula2;
