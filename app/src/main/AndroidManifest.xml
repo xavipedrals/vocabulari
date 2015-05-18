@@ -44,6 +44,10 @@
             android:name=".ConfigurarJocActivity"
             android:label="@string/title_activity_configurar_joc" >
         </activity>
+        <activity
+            android:name=".InformacioActivity"
+            android:label="@string/title_activity_informacio" >
+        </activity>
     </application>
 
 </manifest>

@@ -171,7 +171,7 @@ public class CreaTraduccioActivity extends ActionBarActivity implements IListDia
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_crea_traduccio, menu);
+        //getMenuInflater().inflate(R.menu.menu_crea_traduccio, menu);
         return true;
     }
 

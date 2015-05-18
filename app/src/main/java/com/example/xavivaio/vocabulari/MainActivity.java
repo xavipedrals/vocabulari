@@ -13,7 +13,7 @@ import com.example.xavivaio.vocabulari.GestionaTotsIdiomes.GestionaIdiomesActivi
 
 public class MainActivity extends ActionBarActivity {
 
-    Button jugarBtn, gestionarBtn, rankingBtn, traduccioBtn;
+    Button jugarBtn, gestionarBtn, rankingBtn, traduccioBtn, aboutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +52,20 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(new Intent(MainActivity.this, CreaTraduccioActivity.class));
             }
         });
+
+        aboutBtn = (Button) findViewById(R.id.aboutBtn);
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, InformacioActivity.class));
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

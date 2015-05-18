@@ -11,4 +11,10 @@
     <string name="title_activity_gestiona_paraula">GestionaParaulaActivity</string>
     <string name="title_activity_crea_traduccio">CreaTraduccioActivity</string>
     <string name="title_activity_configurar_joc">ConfigurarJocActivity</string>
+    <string name="title_activity_informacio">InformacioActivity</string>
+    <string name="about">Aquest joc de vocabulari consisteix en traduir paraules de un idioma a un altre, primer necessites tenir idiomes,
+    paraules i traduccions, que podràs introduir a Gestio Idiomes. Un cop introduides les traduccions pots clicar jugar,
+    escollir els idiomes en que vols fer les traduccions durant la partida i jugar a escriure bé les paraules. A Ranking tens les
+    millors puntuacions dels jugadors i a crear traduccio tens una drecera per crear traduccions de manera mes rapida.
+    Atentament, el creador del joc, Xavier Pedrals.</string>
 </resources>

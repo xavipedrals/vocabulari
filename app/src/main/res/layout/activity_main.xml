@@ -68,6 +68,14 @@
                 android:layout_below="@+id/rankingBtn"
                 android:layout_centerHorizontal="true" />
 
+            <Button
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="INFORMACIO"
+                android:id="@+id/aboutBtn"
+                android:layout_below="@+id/traduccioBtn"
+                android:layout_centerHorizontal="true" />
+
         </LinearLayout>
     </LinearLayout>
 

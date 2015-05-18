@@ -101,7 +101,7 @@ public class ConfigurarJocActivity extends ActionBarActivity implements IListDia
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_configurar_joc, menu);
+        //getMenuInflater().inflate(R.menu.menu_configurar_joc, menu);
         return true;
     }
 
